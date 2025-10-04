@@ -3,10 +3,13 @@ import { ChatContext } from '../Store/ChatContext';
 import { ThemeContext } from '../Store/ThemeContext';
 
 const UserCard = ({user}) => {
-    const {chat,setChat} = useContext(ChatContext);
+    const {chat,setChat,setGroupFlag} = useContext(ChatContext);
     const {theme} = useContext(ThemeContext);
     const handleClick = (user)=>{
-        if(chat?.username != user?.username) setChat(user);
+        if(chat?.username != user?.username) {
+            setChat(user);
+            setGroupFlag(false);
+        }
       }
   return (
     <div onClick={()=>handleClick(user)} className={`${theme ? "bg-white text-black":" text-white"} flex gap-3 items-center pb-3  hover:scale-101 hover:bg-zinc-600 ease-in  duration-150 rounded cursor-pointer hover:shadow-xl`}>
@@ -22,7 +25,7 @@ const UserCard = ({user}) => {
         </div>
         <div className='mx-2'>
             <div className="userName text-xl font-medium">
-                {user.username}
+                {user?.username}
             </div>
             <div className="lastmsg font-light text-sm">
                 call you later
